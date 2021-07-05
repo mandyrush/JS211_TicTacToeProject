@@ -32,25 +32,62 @@ const printBoard = () => {
   console.log('2 ' + board[2].join(' | '));
 }
 
+const resetBoard = () => {
+  board = [
+    [' ', ' ', ' '],
+    [' ', ' ', ' '],
+    [' ', ' ', ' ']
+  ];
+}
+
 const horizontalWin = () => {
   // Your code here to check for horizontal wins
+  return (board[0][0] === 'X' && board[0][1] === 'X' && board[0][2] === 'X') ||
+  (board[1][0] === 'X' && board[1][1] === 'X' && board[1][2] === 'X') ||
+  (board[2][0] === 'X' && board[2][1] === 'X' && board[2][2] === 'X') ||
+  (board[0][0] === 'O' && board[0][1] === 'O' && board[0][2] === 'O') ||
+  (board[1][0] === 'O' && board[1][1] === 'O' && board[1][2] === 'O') ||
+  (board[2][0] === 'O' && board[2][1] === 'O' && board[2][2] === 'O')
 }
 
 const verticalWin = () => {
   // Your code here to check for vertical wins
+  return (board[0][0] === 'X' && board[1][0] === 'X' && board[2][0] === 'X') ||
+  (board[0][1] === 'X' && board[1][1] === 'X' && board[2][1] === 'X') ||
+  (board[0][2] === 'X' && board[1][2] === 'X' && board[2][2] === 'X') ||
+  (board[0][0] === 'O' && board[1][0] === 'O' && board[2][0] === 'O') ||
+  (board[0][1] === 'O' && board[1][1] === 'O' && board[2][1] === 'O') ||
+  (board[0][2] === 'O' && board[1][2] === 'O' && board[2][2] === 'O')
 }
 
 const diagonalWin = () => {
   // Your code here to check for diagonal wins
+  return (board[0][0] === 'X' && board[1][1] === 'X' && board[2][2] === 'X') ||
+  (board[0][2] === 'X' && board[1][1] === 'X' && board[2][0] === 'X') ||
+  (board[0][0] === 'O' && board[1][1] === 'O' && board[2][2] === 'O') ||
+  (board[0][2] === 'O' && board[1][1] === 'O' && board[2][0] === 'O')
 }
 
 const checkForWin = () => {
   // Your code here call each of the check for types of wins
+  if (horizontalWin() || verticalWin() || diagonalWin()) {
+    console.log('Player ' + playerTurn + ' won!');
+    resetBoard();
+  }
+  return true;
 }
 
 const ticTacToe = (row, column) => {
   // Your code here to place a marker on the board
+  board[row][column] = playerTurn;
   // then check for a win
+  checkForWin();
+
+  if (playerTurn === 'X') {
+    playerTurn = 'O';
+  } else if(playerTurn === 'O') {
+    playerTurn = 'X';
+  }
 }
 
 const getPrompt = () => {
