@@ -81,15 +81,27 @@ const changePlayer = () => {
   }
 }
 
+/**
+ * This function takes in a row and a column and places a marker on the board. 
+ * Then it checks to see if the last move won the game for either player.
+ * If one of the players won it returns true and changes players for the next game 
+ * otherwise it returns false and changes players.
+ * @param {*} row 
+ * @param {*} column 
+ * @returns 
+ */
 const ticTacToe = (row, column) => {
   // Your code here to place a marker on the board
   board[row][column] = playerTurn;
   // then check for a win
   if (checkForWin()) {
     console.log('Player ' + playerTurn + ' won!');
-    // resetBoard();
+    changePlayer();  
+    return true
+  } else {
+    changePlayer();  
+    return false
   }
-  changePlayer();
 }
 
 const getPrompt = () => {
@@ -97,7 +109,10 @@ const getPrompt = () => {
   console.log("It's Player " + playerTurn + "'s turn.");
   rl.question('row: ', (row) => {
     rl.question('column: ', (column) => {
-      ticTacToe(row, column);
+      let wonGame = ticTacToe(row, column);
+      if(wonGame) {
+        resetBoard();
+      }
       getPrompt();
     });
   });
